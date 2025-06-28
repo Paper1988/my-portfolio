@@ -1,20 +1,19 @@
-'use client' // 這表示這是一個客戶端元件
+'use client'
 
-import { Moon, Sun } from 'lucide-react' // 引入月亮和太陽圖標
+import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import * as React from 'react'
 
 export function ThemeToggle() {
     const { theme, setTheme } = useTheme()
 
-    // 如果尚未渲染到客戶端，則不渲染任何內容，避免 hydration 錯誤
     const [mounted, setMounted] = React.useState(false)
     React.useEffect(() => {
         setMounted(true)
     }, [])
 
     if (!mounted) {
-        return null // 或者你可以返回一個加載狀態的按鈕
+        return null
     }
 
     return (
