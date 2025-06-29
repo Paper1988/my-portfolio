@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         template: '%s | Paper'
     },
     description:
-        '我是 Paper，一名熱衷於打造優質使用者體驗的軟體開發者。這是一個展示我的程式專案、關於我的介紹以及聯絡方式的個人作品集網站。', // 更豐富的描述
+        '我是 Paper，一名熱衷於打造優質使用者體驗的軟體開發者。這是一個展示我的程式專案、關於我的介紹以及聯絡方式的個人作品集網站。',
     keywords: [
         'Paper',
         '作品集',
@@ -47,9 +47,8 @@ export const metadata: Metadata = {
                 width: 1200,
                 height: 630
             },
-            // 你可以添加更多圖片，例如一個正方形的圖片
             {
-                url: 'https://paperdesu.netlify.app/paper-icon.png',
+                url: 'https://paperdesu.netlify.app/favicon.png',
                 width: 400,
                 height: 400
             }
@@ -59,12 +58,12 @@ export const metadata: Metadata = {
     },
 
     // 其他可選的 Meta Tags
-    robots: 'index, follow' // 告訴搜尋引擎爬蟲是否索引和追蹤此頁面
-    // icons: {
-    //   icon: '/favicon.ico', // 網站圖標
-    //   shortcut: '/shortcut-icon.png',
-    //   apple: '/apple-touch-icon.png',
-    // },
+    robots: 'index, follow', // 告訴搜尋引擎爬蟲是否索引和追蹤此頁面
+    icons: {
+        icon: '/favicon.png',
+        shortcut: '/favicon.png',
+        apple: '/favicon.png'
+    }
     // manifest: '/site.webmanifest' // PWA (Progressive Web App) 的 manifest 檔案
 }
 

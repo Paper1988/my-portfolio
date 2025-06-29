@@ -39,7 +39,7 @@ export async function POST(request: Request) {
                     ],
                     footer: {
                         text: '來自你的個人作品集',
-                        icon_url: 'https://paperdesu.netlify.app/favicon.ico' // 替換成你的網站 favicon
+                        icon_url: 'https://paperdesu.netlify.app/favicon.png' // 替換成你的網站 favicon
                     }
                 }
             ]
