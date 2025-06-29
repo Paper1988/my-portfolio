@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { ArrowRight, Github, Mail } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useEffect } from 'react'
 
 export default function Home() {
@@ -65,35 +66,39 @@ export default function Home() {
     return (
         <main className="min-h-screen bg-background text-foreground">
             {/* navbar section */}
-            <section
-                id="navbar"
-                className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm py-4 px-8 border-b border-border transition-colors duration-300"
-            >
-                <nav className="flex justify-between items-center max-w-6xl mx-auto">
-                    <h1 className="text-2xl font-bold tracking-tight">Paper</h1>
-                    <ul className="flex space-x-6 items-center">
+            <section id="navbar" className="sticky top-4 z-50 flex justify-center px-4">
+                {' '}
+                {/* 新增 flex justify-center 和 px-4 */}
+                <nav className="flex justify-between items-center w-full max-w-4xl bg-card/40 backdrop-blur-md p-4 rounded-full shadow-lg border border-border transition-colors duration-300">
+                    {' '}
+                    {/* 調整樣式 */}
+                    <h1 className="text-2xl font-bold tracking-tight pl-4">Paper</h1>{' '}
+                    {/* 調整 padding */}
+                    <ul className="flex space-x-6 items-center pr-4">
+                        {' '}
+                        {/* 調整 padding */}
                         <li>
                             <a
                                 href="#hero"
                                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
-                                Home
+                                首頁
                             </a>
                         </li>
                         <li>
-                            <a
-                                href="#about"
+                            <Link
+                                href="/about"
                                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
-                                About
-                            </a>
+                                關於我
+                            </Link>
                         </li>
                         <li>
                             <a
                                 href="#projects"
                                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
-                                Projects
+                                專案
                             </a>
                         </li>
                         <li>
@@ -101,7 +106,7 @@ export default function Home() {
                                 href="#contact"
                                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
-                                Contact
+                                聯絡
                             </a>
                         </li>
                         <li>
@@ -142,7 +147,7 @@ export default function Home() {
             </section>
 
             {/* about section */}
-            <section id="about" className="py-20 px-8 bg-muted/20">
+            {/* <section id="about" className="py-20 px-8 bg-muted/20">
                 <h2 className="text-4xl md:text-5xl font-bold mb-10 tracking-tight text-center">
                     {t('about.title')}
                 </h2>
@@ -159,7 +164,7 @@ export default function Home() {
                         ))}
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             {/* projects section */}
             <section id="projects" className="py-20 px-8 bg-background">
