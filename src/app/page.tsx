@@ -4,8 +4,38 @@ import { Button } from '@/components/ui/button'
 import { ArrowRight, Github, LinkedinIcon, Mail } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
+import { useEffect } from 'react'
 
 export default function Home() {
+    useEffect(() => {
+        // 使用 setTimeout 稍微延遲一下，避免在開發環境熱重載時頻繁觸發
+        // 也可以確保頁面渲染完成
+        const timer = setTimeout(() => {
+            fetch('/api/visit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    // 如果你想在前端發送額外數據到後端，可以放在這裡
+                    // 例如：page: 'home'
+                })
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        console.log('Visit notification sent to backend successfully.')
+                    } else {
+                        console.error('Failed to send visit notification to backend.')
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error sending visit notification:', error)
+                })
+        }, 1000) // 延遲 1 秒
+
+        return () => clearTimeout(timer) // 清除定時器，避免組件卸載後繼續執行
+    }, []) // 空依賴陣列表示只在組件掛載時執行一次
+
     const t = useTranslations('Home')
 
     const projects = [
@@ -24,7 +54,7 @@ export default function Home() {
             altText: 'DoContrib 預覽圖',
             title: 'DoContrib',
             description: t('projects.docontrib.description'),
-            technologies: ['Next.js', 'Tailwind CSS', 'Supabase', 'TypeScript'],
+            technologies: ['Next.js', 'Tailwind CSS', 'Supabase', 'Vercel'],
             demoLink: 'https://docontrib.vercel.app/',
             githubLink: 'https://github.com/Paper1988/DoContrib',
             demoText: t('projects.docontrib.demoText')
