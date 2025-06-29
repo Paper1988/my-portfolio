@@ -27,7 +27,7 @@
         "**/*.ts",
         "**/*.tsx",
         ".next/types/**/*.ts",
-        "src/scripts/translate.js"
+        "dev/scripts/translate.js"
     ],
-    "exclude": ["node_modules", "src/scripts"]
+    "exclude": ["node_modules", "dev/scripts"]
 }
