@@ -3,13 +3,15 @@
 import Discord from '@/components/icon/Discord'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/button'
-import { Github, Mail } from 'lucide-react'
+import { Github, Mail, Menu, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+
     useEffect(() => {
         const timer = setTimeout(() => {
             fetch('/api/visit', {
@@ -17,10 +19,7 @@ export default function Home() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    // 如果你想在前端發送額外數據到後端，可以放在這裡
-                    // 例如：page: 'home'
-                })
+                body: JSON.stringify({})
             })
                 .then((response) => {
                     if (response.ok) {
@@ -43,13 +42,41 @@ export default function Home() {
         <main className="min-h-screen bg-background text-foreground">
             {/* navbar section */}
             <section id="navbar" className="sticky top-4 z-50 flex justify-center px-4">
-                <nav className="flex justify-between items-center w-full max-w-4xl bg-card/40 backdrop-blur-md p-4 rounded-full shadow-lg border border-border transition-colors duration-300">
-                    <h1 className="text-2xl font-bold tracking-tight pl-4">Paper</h1>
-                    <ul className="flex space-x-6 items-center pr-4">
+                <nav className="flex items-center w-full max-w-4xl bg-card/80 backdrop-blur-md p-4 rounded-full shadow-lg border border-border transition-colors duration-300 relative">
+                    {/* 左側 Logo/標題 */}
+                    <h1 className="text-2xl font-bold tracking-tight pl-4 flex-grow">Paper</h1>
+
+                    {/* 漢堡選單按鈕 - 只在小螢幕顯示 */}
+                    <button
+                        className="md:hidden p-2 rounded-md text-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary z-50"
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        aria-label="Toggle navigation menu"
+                    >
+                        {isMenuOpen ? (
+                            <X className="h-6 w-6" /> // 選單打開時顯示 X 圖標
+                        ) : (
+                            <Menu className="h-6 w-6" /> // 選單關閉時顯示漢堡圖標
+                        )}
+                    </button>
+
+                    {/* 導覽連結 - 根據 isMenuOpen 狀態顯示/隱藏 */}
+                    <ul
+                        className={`
+                        absolute md:static top-0 left-0 w-full md:w-auto h-screen md:h-auto
+                        flex flex-col md:flex-row items-center justify-center md:justify-end
+                        space-y-6 md:space-y-0 md:space-x-6
+                        bg-card/95 md:bg-transparent
+                        transform transition-transform duration-300 ease-in-out
+                        ${isMenuOpen ? 'translate-x-0' : 'translate-x-full md:translate-x-0'}
+                        md:flex md:pr-4 z-40
+                        `}
+                        // 點擊連結後自動關閉選單 (手機模式)
+                        onClick={() => setIsMenuOpen(false)}
+                    >
                         <li>
                             <Link
                                 href="/"
-                                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+                                className="text-xl md:text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
                                 Home
                             </Link>
@@ -57,7 +84,7 @@ export default function Home() {
                         <li>
                             <Link
                                 href="/about"
-                                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+                                className="text-xl md:text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
                                 About
                             </Link>
@@ -65,7 +92,7 @@ export default function Home() {
                         <li>
                             <Link
                                 href="/projects"
-                                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+                                className="text-xl md:text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
                                 Projects
                             </Link>
@@ -73,12 +100,14 @@ export default function Home() {
                         <li>
                             <Link
                                 href="#contact"
-                                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+                                className="text-xl md:text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
                                 Contact
                             </Link>
                         </li>
-                        <li>
+                        <li className="mt-6 md:mt-0">
+                            {' '}
+                            {/* 為 ThemeToggle 在手機上提供額外間距 */}
                             <ThemeToggle />
                         </li>
                     </ul>
@@ -88,7 +117,7 @@ export default function Home() {
             {/* hero section */}
             <section
                 id="hero"
-                className="min-h-[calc(100vh-69px)] flex items-center justify-center text-center p-8"
+                className="min-h-[calc(100vh-6rem)] flex items-center justify-center text-center py-16 px-8"
             >
                 <div>
                     <Image
@@ -98,22 +127,22 @@ export default function Home() {
                         height={180}
                         className="rounded-full mx-auto mb-8 shadow-lg border-2 border-border animate-fade-in"
                     />
-                    <h2 className="text-[40px] md:text-[56px] font-extrabold mb-4 tracking-tight animate-slide-up">
+                    <h2 className="ext-4xl md:text-6xl lg:text-7xl font-extrabold mb-4 md:mb-6 tracking-tight animate-fade-in-up">
                         {t('hero.greeting')}
                     </h2>
-                    <p className="text-md md:text-xl max-w-2xl mx-auto mb-10 text-muted-foreground animate-fade-in-delay">
+                    <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground mb-8 md:mb-10 leading-relaxed animate-fade-in-up delay-200">
                         {t('hero.description')}
                     </p>
-                    <div className="flex flex-col md:flex-row justify-center space-x-4">
+                    <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in-up delay-400">
                         <Link
                             href="/projects"
-                            className="px-8 py-3 bg-primary text-primary-foreground rounded-full text-lg font-semibold hover:bg-primary/90 transition-colors duration-300 shadow-lg"
+                            className="px-6 py-2 sm:px-8 sm:py-3 bg-primary text-primary-foreground rounded-full text-base sm:text-lg font-semibold hover:bg-primary/90 transition-colors duration-300 shadow-lg"
                         >
                             {t('hero.cta')}
                         </Link>
                         <Link
                             href="/about"
-                            className="px-8 py-3 border border-border text-foreground rounded-full text-lg font-semibold hover:bg-muted transition-colors duration-300"
+                            className="px-6 py-2 sm:px-8 sm:py-3 border border-border text-foreground rounded-full text-base sm:text-lg font-semibold hover:bg-muted transition-colors duration-300"
                         >
                             {t('hero.about')}
                         </Link>
@@ -128,31 +157,42 @@ export default function Home() {
                     <p className="text-lg mb-8 text-muted-foreground">
                         如果你有任何問題、合作機會，或是想聊聊技術，歡迎隨時聯絡我！
                     </p>
-                    <div className="flex justify-center space-x-4">
-                        <Button asChild size="lg" className="w-40 flex items-center justify-center">
+                    {/* 修改這個 div 的 class */}
+                    <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                        {/* 每個 Button 的 class 也需要調整 */}
+                        <Button
+                            asChild
+                            size="lg"
+                            className="w-full sm:w-40 flex items-center justify-center"
+                        >
                             <a href="mailto:ericliu8888824@gmail.com">
                                 <Mail className="mr-2 h-4 w-4" /> 電子郵件
                             </a>
                         </Button>
-                        {/* <Button
-                            asChild
-                            size="lg"
-                            variant="outline"
-                            className="w-40 flex items-center justify-center"
-                        >
-                            <a
-                                href="https://www.linkedin.com/in/%E7%B4%99%E9%A1%9E-%E5%8A%89-099198330/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <LinkedinIcon className="mr-2 h-4 w-4" /> LinkedIn
-                            </a>
-                        </Button> */}
+
+                        {/* 如果你啟用 LinkedIn 按鈕，也適用同樣的修改 */}
+                        {/*
                         <Button
                             asChild
                             size="lg"
                             variant="outline"
-                            className="w-40 flex items-center justify-center"
+                            className="w-full sm:w-40 flex items-center justify-center"
+                        >
+                            <a
+                            href="https://www.linkedin.com/in/%E7%B4%99%E9%A1%9E-%E5%8A%89-099198330/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >
+                            <LinkedinIcon className="mr-2 h-4 w-4" /> LinkedIn
+                            </a>
+                        </Button>
+                        */}
+
+                        <Button
+                            asChild
+                            size="lg"
+                            variant="outline"
+                            className="w-full sm:w-40 flex items-center justify-center"
                         >
                             <a
                                 href="https://github.com/Paper1988"
@@ -166,7 +206,7 @@ export default function Home() {
                             asChild
                             size="lg"
                             variant="outline"
-                            className="w-40 flex items-center justify-center"
+                            className="w-full sm:w-40 flex items-center justify-center"
                         >
                             <a
                                 href="https://discord.com/users/538639229220028416"
