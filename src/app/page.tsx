@@ -1,36 +1,16 @@
 'use client'
 
+import Discord from '@/components/icon/Discord'
 import { ProjectCard } from '@/components/ProjectCards'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Github, Mail } from 'lucide-react'
-
-export function Discord(props: React.SVGProps<SVGSVGElement>) {
-    return (
-        <svg
-            width="80"
-            height="80"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            transform="rotate(0 0 0)"
-        >
-            <path
-                d="M18.9419 5.55541C17.6473 4.94967 16.263 4.50945 14.8158 4.25879C14.638 4.58013 14.4304 5.01234 14.2872 5.35616C12.7488 5.1248 11.2244 5.1248 9.71431 5.35616C9.57116 5.01234 9.35878 4.58013 9.17947 4.25879C7.73069 4.50945 6.34478 4.95129 5.05016 5.5586C2.43887 9.5046 1.73099 13.3526 2.08493 17.1459C3.81688 18.4393 5.49534 19.225 7.14547 19.7391C7.55291 19.1784 7.91628 18.5823 8.22931 17.9541C7.63313 17.7276 7.06209 17.448 6.52256 17.1235C6.66569 17.0174 6.80572 16.9066 6.94097 16.7925C10.2318 18.3317 13.8074 18.3317 17.0589 16.7925C17.1958 16.9066 17.3358 17.0174 17.4774 17.1235C16.9362 17.4496 16.3637 17.7292 15.7675 17.9557C16.0805 18.5823 16.4423 19.18 16.8513 19.7407C18.503 19.2266 20.1831 18.4409 21.915 17.1459C22.3303 12.7485 21.2056 8.93585 18.9419 5.55541ZM8.67766 14.8131C7.68978 14.8131 6.87963 13.8908 6.87963 12.7678C6.87963 11.6447 7.67247 10.7209 8.67766 10.7209C9.68284 10.7209 10.493 11.6431 10.4757 12.7678C10.4772 13.8908 9.68284 14.8131 8.67766 14.8131ZM15.3223 14.8131C14.3344 14.8131 13.5243 13.8908 13.5243 12.7678C13.5243 11.6447 14.3171 10.7209 15.3223 10.7209C16.3275 10.7209 17.1376 11.6431 17.1203 12.7678C17.1203 13.8908 16.3275 14.8131 15.3223 14.8131Z"
-                fill="#343C54"
-            />
-        </svg>
-    )
-}
-
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { useEffect } from 'react'
 
 export default function Home() {
     useEffect(() => {
-        // 使用 setTimeout 稍微延遲一下，避免在開發環境熱重載時頻繁觸發
-        // 也可以確保頁面渲染完成
         const timer = setTimeout(() => {
             fetch('/api/visit', {
                 method: 'POST',
@@ -52,10 +32,10 @@ export default function Home() {
                 .catch((error) => {
                     console.error('Error sending visit notification:', error)
                 })
-        }, 1000) // 延遲 1 秒
+        }, 1000)
 
-        return () => clearTimeout(timer) // 清除定時器，避免組件卸載後繼續執行
-    }, []) // 空依賴陣列表示只在組件掛載時執行一次
+        return () => clearTimeout(timer)
+    }, [])
 
     const t = useTranslations('Home')
 
@@ -84,7 +64,7 @@ export default function Home() {
 
     return (
         <main className="min-h-screen bg-background text-foreground">
-            {/* 導覽列區塊 */}
+            {/* navbar section */}
             <section
                 id="navbar"
                 className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm py-4 px-8 border-b border-border transition-colors duration-300"
@@ -131,7 +111,7 @@ export default function Home() {
                 </nav>
             </section>
 
-            {/* Hero 區塊 */}
+            {/* hero section */}
             <section
                 id="hero"
                 className="min-h-[calc(100vh-69px)] flex items-center justify-center text-center p-8"
@@ -161,7 +141,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* 關於我區塊 */}
+            {/* about section */}
             <section id="about" className="py-20 px-8 bg-muted/20">
                 <h2 className="text-4xl md:text-5xl font-bold mb-10 tracking-tight text-center">
                     {t('about.title')}
@@ -181,7 +161,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* 專案區塊 (Projects Section) */}
+            {/* projects section */}
             <section id="projects" className="py-20 px-8 bg-background">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 tracking-tight">
@@ -195,7 +175,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* 聯絡區塊 (Contact Section) */}
+            {/* contact section */}
             <section id="contact" className="py-20 px-8 bg-muted/20">
                 <div className="max-w-2xl mx-auto text-center">
                     <h2 className="text-4xl md:text-5xl font-bold mb-10 tracking-tight">聯絡我</h2>
@@ -254,7 +234,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* 頁尾 (Footer) */}
+            {/* footer section */}
             <footer className="py-8 px-8 text-center text-muted-foreground border-t border-border">
                 <p>&copy; {new Date().getFullYear()} Paper. 版權所有。</p>
             </footer>
