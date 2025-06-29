@@ -3,7 +3,8 @@
         "hero": {
             "greeting": "嗨，我是 Paper",
             "description": "我是一位熱愛寫程式的高中生，這裡是屬於我的小天地。",
-            "cta": "查看我的專案"
+            "cta": "查看我的專案",
+            "about": "了解更多關於我"
         },
         "about": {
             "title": "關於我",
@@ -14,12 +15,12 @@
         },
         "projects": {
             "paper": {
-                "description": "這個專案是一個多功能 Discord 機器人。它可以幫助你管理你的 Discord 伺服器、播放音樂、創建抽獎活動，以及更多功能。",
+                "description": "多功能 Discord 機器人。它可以幫助你管理你的 Discord 伺服器、播放音樂、創建抽獎活動，以及更多功能。",
                 "demoText": "邀請機器人"
             },
             "docontrib": {
-                "description": "這個專案是一個貢獻追蹤網頁。它使用了 Next.js、TailwindCSS、MUI、TypeScript，並使用 Supabase 資料庫、Vercel 託管服務。",
-                "demoText": "查看demo"
+                "description": "這是一個可以追蹤你的團隊貢獻度的網頁。透過在網站上和團隊成員共同編輯文件，追蹤每人的貢獻度，杜絕躺分仔。",
+                "demoText": "點我前往(無效連結)"
             }
         },
         "contact": {

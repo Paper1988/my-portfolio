@@ -1,10 +1,9 @@
 'use client'
 
 import Discord from '@/components/icon/Discord'
-import { ProjectCard } from '@/components/ProjectCards'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Github, Mail } from 'lucide-react'
+import { Github, Mail } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -40,74 +39,44 @@ export default function Home() {
 
     const t = useTranslations('Home')
 
-    const projects = [
-        {
-            imageSrc: '/paper.png',
-            altText: 'Paper 預覽圖',
-            title: 'Paper',
-            description: t('projects.paper.description'),
-            technologies: ['Discord.js', 'MongoDB', 'Distube', 'Discord API', 'Railway.app'],
-            demoLink: 'https://discord.com/oauth2/authorize?client_id=869166906765103135',
-            githubLink: 'https://github.com/Paper1988/Paper',
-            demoText: t('projects.paper.demoText')
-        },
-        {
-            imageSrc: '/DoContrib.jpg',
-            altText: 'DoContrib 預覽圖',
-            title: 'DoContrib',
-            description: t('projects.docontrib.description'),
-            technologies: ['Next.js', 'Tailwind CSS', 'Supabase', 'Vercel'],
-            demoLink: 'https://docontrib.vercel.app/',
-            githubLink: 'https://github.com/Paper1988/DoContrib',
-            demoText: t('projects.docontrib.demoText')
-        }
-    ]
-
     return (
         <main className="min-h-screen bg-background text-foreground">
             {/* navbar section */}
             <section id="navbar" className="sticky top-4 z-50 flex justify-center px-4">
-                {' '}
-                {/* 新增 flex justify-center 和 px-4 */}
                 <nav className="flex justify-between items-center w-full max-w-4xl bg-card/40 backdrop-blur-md p-4 rounded-full shadow-lg border border-border transition-colors duration-300">
-                    {' '}
-                    {/* 調整樣式 */}
-                    <h1 className="text-2xl font-bold tracking-tight pl-4">Paper</h1>{' '}
-                    {/* 調整 padding */}
+                    <h1 className="text-2xl font-bold tracking-tight pl-4">Paper</h1>
                     <ul className="flex space-x-6 items-center pr-4">
-                        {' '}
-                        {/* 調整 padding */}
                         <li>
-                            <a
-                                href="#hero"
+                            <Link
+                                href="/"
                                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
-                                首頁
-                            </a>
+                                Home
+                            </Link>
                         </li>
                         <li>
                             <Link
                                 href="/about"
                                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
-                                關於我
+                                About
                             </Link>
                         </li>
                         <li>
-                            <a
-                                href="#projects"
+                            <Link
+                                href="/projects"
                                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
-                                專案
-                            </a>
+                                Projects
+                            </Link>
                         </li>
                         <li>
-                            <a
+                            <Link
                                 href="#contact"
                                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
-                                聯絡
-                            </a>
+                                Contact
+                            </Link>
                         </li>
                         <li>
                             <ThemeToggle />
@@ -135,47 +104,19 @@ export default function Home() {
                     <p className="text-md md:text-xl max-w-2xl mx-auto mb-10 text-muted-foreground animate-fade-in-delay">
                         {t('hero.description')}
                     </p>
-                    <Button
-                        asChild
-                        className="animate-scale-in bg-primary text-white hover:bg-primary/80 shadow-md rounded-xl px-6 py-3 text-sm"
-                    >
-                        <a href="#projects">
-                            {t('hero.cta')} <ArrowRight className="ml-2 h-4 w-4" />
-                        </a>
-                    </Button>
-                </div>
-            </section>
-
-            {/* about section */}
-            {/* <section id="about" className="py-20 px-8 bg-muted/20">
-                <h2 className="text-4xl md:text-5xl font-bold mb-10 tracking-tight text-center">
-                    {t('about.title')}
-                </h2>
-                <div className="max-w-4xl mx-auto text-left space-y-6">
-                    <p className="text-xl leading-relaxed mb-4 text-muted-foreground text-center">
-                        {t('about.p1')}
-                    </p>
-                    <div className="text-lg leading-relaxed text-muted-foreground animate-scale-in">
-                        {[2, 3, 4].map((i) => (
-                            <p key={i} className="text-lg leading-relaxed text-muted-foreground">
-                                <br />
-                                {t(`about.p${i}`)}
-                            </p>
-                        ))}
-                    </div>
-                </div>
-            </section> */}
-
-            {/* projects section */}
-            <section id="projects" className="py-20 px-8 bg-background">
-                <div className="max-w-6xl mx-auto">
-                    <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 tracking-tight">
-                        我的專案
-                    </h2>
-                    <div className="my-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10">
-                        {projects.map((project, index) => (
-                            <ProjectCard key={index} {...project} />
-                        ))}
+                    <div className="flex flex-col md:flex-row justify-center space-x-4">
+                        <Link
+                            href="/projects"
+                            className="px-8 py-3 bg-primary text-primary-foreground rounded-full text-lg font-semibold hover:bg-primary/90 transition-colors duration-300 shadow-lg"
+                        >
+                            {t('hero.cta')}
+                        </Link>
+                        <Link
+                            href="/about"
+                            className="px-8 py-3 border border-border text-foreground rounded-full text-lg font-semibold hover:bg-muted transition-colors duration-300"
+                        >
+                            {t('hero.about')}
+                        </Link>
                     </div>
                 </div>
             </section>
