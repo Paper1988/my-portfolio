@@ -45,16 +45,14 @@ export const metadata: Metadata = {
             {
                 url: 'https://paperdesu.netlify.app/og.png',
                 width: 1200,
-                height: 630,
-                alt: 'image-loading-failed'
-            }
+                height: 630
+            },
             // 你可以添加更多圖片，例如一個正方形的圖片
-            // {
-            //   url: 'https://your-portfolio-domain.com/og-image-square.jpg',
-            //   width: 400,
-            //   height: 400,
-            //   alt: 'Paper 個人作品集正方形預覽圖',
-            // },
+            {
+                url: 'https://paperdesu.netlify.app/paper-icon.png',
+                width: 400,
+                height: 400
+            }
         ],
         locale: 'zh_TW',
         type: 'website'
