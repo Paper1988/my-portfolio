@@ -43,23 +43,16 @@ export default function Home() {
             {/* navbar section */}
             <section id="navbar" className="sticky top-4 z-50 flex justify-center px-4">
                 <nav className="flex items-center w-full max-w-4xl bg-card/80 backdrop-blur-md p-4 rounded-full shadow-lg border border-border transition-colors duration-300 relative">
-                    {/* 左側 Logo/標題 */}
                     <h1 className="text-2xl font-bold tracking-tight pl-4 flex-grow">Paper</h1>
 
-                    {/* 漢堡選單按鈕 - 只在小螢幕顯示 */}
                     <button
                         className="md:hidden p-2 rounded-md text-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary z-50"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         aria-label="Toggle navigation menu"
                     >
-                        {isMenuOpen ? (
-                            <X className="h-6 w-6" /> // 選單打開時顯示 X 圖標
-                        ) : (
-                            <Menu className="h-6 w-6" /> // 選單關閉時顯示漢堡圖標
-                        )}
+                        {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                     </button>
 
-                    {/* 導覽連結 - 根據 isMenuOpen 狀態顯示/隱藏 */}
                     <ul
                         className={`
                         absolute md:static top-0 left-0 w-full md:w-auto h-screen md:h-auto
@@ -70,7 +63,6 @@ export default function Home() {
                         ${isMenuOpen ? 'translate-x-0' : 'translate-x-full md:translate-x-0'}
                         md:flex md:pr-4 z-40
                         `}
-                        // 點擊連結後自動關閉選單 (手機模式)
                         onClick={() => setIsMenuOpen(false)}
                     >
                         <li>
@@ -98,16 +90,15 @@ export default function Home() {
                             </Link>
                         </li>
                         <li>
-                            <Link
+                            <a
                                 href="#contact"
                                 className="text-xl md:text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
                                 Contact
-                            </Link>
+                            </a>
                         </li>
                         <li className="mt-6 md:mt-0">
                             {' '}
-                            {/* 為 ThemeToggle 在手機上提供額外間距 */}
                             <ThemeToggle />
                         </li>
                     </ul>
@@ -127,7 +118,7 @@ export default function Home() {
                         height={180}
                         className="rounded-full mx-auto mb-8 shadow-lg border-2 border-border animate-fade-in"
                     />
-                    <h2 className="ext-4xl md:text-6xl lg:text-7xl font-extrabold mb-4 md:mb-6 tracking-tight animate-fade-in-up">
+                    <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-4 md:mb-6 tracking-tight animate-fade-in-up">
                         {t('hero.greeting')}
                     </h2>
                     <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground mb-8 md:mb-10 leading-relaxed animate-fade-in-up delay-200">
@@ -157,9 +148,7 @@ export default function Home() {
                     <p className="text-lg mb-8 text-muted-foreground">
                         如果你有任何問題、合作機會，或是想聊聊技術，歡迎隨時聯絡我！
                     </p>
-                    {/* 修改這個 div 的 class */}
                     <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                        {/* 每個 Button 的 class 也需要調整 */}
                         <Button
                             asChild
                             size="lg"
