@@ -1,3 +1,5 @@
+'use client'
+
 import { ProjectCard } from '@/components/ProjectCards'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/button'
