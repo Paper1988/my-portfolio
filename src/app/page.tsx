@@ -78,7 +78,7 @@ export default function Home() {
                                 href="#hero"
                                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
-                                首頁
+                                Home
                             </a>
                         </li>
                         <li>
@@ -86,7 +86,7 @@ export default function Home() {
                                 href="#about"
                                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
-                                關於我
+                                About
                             </a>
                         </li>
                         <li>
@@ -94,7 +94,7 @@ export default function Home() {
                                 href="#projects"
                                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
-                                專案
+                                Projects
                             </a>
                         </li>
                         <li>
@@ -102,7 +102,7 @@ export default function Home() {
                                 href="#contact"
                                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
-                                聯絡
+                                Contact
                             </a>
                         </li>
                         <li>
@@ -120,7 +120,7 @@ export default function Home() {
                 <div>
                     <Image
                         src="/avatar.jpg"
-                        alt="頭像"
+                        alt="avatar"
                         width={180}
                         height={180}
                         className="rounded-full mx-auto mb-8 shadow-lg border-2 border-border animate-fade-in"
@@ -147,11 +147,17 @@ export default function Home() {
                 <h2 className="text-4xl md:text-5xl font-bold mb-10 tracking-tight text-center">
                     {t('about.title')}
                 </h2>
-                <div className="max-w-3xl mx-auto text-left space-y-6">
-                    <p className="text-lg leading-relaxed mb-6 text-muted-foreground">
+                <div className="max-w-4xl mx-auto text-left space-y-6">
+                    <p className="text-xl leading-relaxed mb-6 text-muted-foreground text-center">
                         {t('about.p1')}
                     </p>
-                    <p className="text-lg leading-relaxed text-muted-foreground">{t('about.p2')}</p>
+                    <div className="text-lg leading-relaxed text-muted-foreground animate-scale-in">
+                        {[2, 3, 4].map((i) => (
+                            <p key={i} className="text-lg leading-relaxed text-muted-foreground">
+                                {t(`about.p${i}`)}
+                            </p>
+                        ))}
+                    </div>
                 </div>
             </section>
 

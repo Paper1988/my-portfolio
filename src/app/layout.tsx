@@ -19,7 +19,7 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
     title: {
-        default: ' | Paper',
+        default: '| Paper',
         template: '%s | Paper'
     },
     description:
@@ -60,9 +60,9 @@ export const metadata: Metadata = {
     // 其他可選的 Meta Tags
     robots: 'index, follow', // 告訴搜尋引擎爬蟲是否索引和追蹤此頁面
     icons: {
-        icon: '/favicon.png',
-        shortcut: '/favicon.png',
-        apple: '/favicon.png'
+        icon: 'https://paperdesu.netlify.app/favicon.png',
+        shortcut: 'https://paperdesu.netlify.app/favicon.png',
+        apple: 'https://paperdesu.netlify.app/favicon.png'
     }
     // manifest: '/site.webmanifest' // PWA (Progressive Web App) 的 manifest 檔案
 }
