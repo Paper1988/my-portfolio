@@ -2,16 +2,15 @@ import { Button } from '@/components/ui/button'
 import { ArrowRight, Github } from 'lucide-react'
 import Image from 'next/image'
 
-// 定義 ProjectCard 元件的 props 介面
 interface ProjectCardProps {
     imageSrc: string
     altText: string
     title: string
     description: string
     technologies: string[]
-    demoLink?: string // 可選的，因為有些專案可能沒有演示連結
+    demoLink?: string
     githubLink: string
-    demoText?: string // 可選的，用於自訂演示連結文字 (例如 "邀請機器人")
+    demoText?: string
 }
 
 export function ProjectCard({
@@ -22,7 +21,7 @@ export function ProjectCard({
     technologies,
     demoLink,
     githubLink,
-    demoText = '查看demo' // 預設文字為 "查看演示"
+    demoText = '查看demo'
 }: ProjectCardProps) {
     return (
         <div className="relative group overflow-hidden rounded-lg border bg-card text-card-foreground shadow-md transition-all duration-300 hover:shadow-xl transform hover:-translate-y-2">

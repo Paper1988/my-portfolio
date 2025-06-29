@@ -1,0 +1,32 @@
+{
+    "Home": {
+        "hero": {
+            "greeting": "嗨，我是 Paper",
+            "description": "我是一位熱愛寫程式的高中生，這裡是屬於我的小天地。",
+            "cta": "查看我的專案"
+        },
+        "about": {
+            "title": "關於我",
+            "p1": "我是 Paper，來自台灣的 17 歲高中生，也是「Paper📄」Discord 機器人的開發者。我熱衷於把想法化作具備價值的程式作品——不論是機器人、互動式網站，還是 RWD 響應式介面，我都想親手打造出讓人眼睛為之一亮的體驗。在網頁專案開發中，我重視 UI/UX，尤其是使用者體驗。我也擅長以 Next.js + Tailwind CSS 架構全端，並結合 ShadCN UI 與 Framer Motion 為產品注入生動互動；後端我常用 Supabase 做資料持久化。透過這些技術，我希望能把複雜問題拆解成簡潔易用的功能，並持續優化效能與使用者流程。",
+            "p2": "除了寫程式，我還是歷史迷，平常也喜歡打排球、健身和看科普書。音樂、語言，都是我腦袋裡無限迴圈的學習清單。我相信「好奇心」是最強的動力，不斷探索新技術、不怕踩坑、樂於分享，是我成為優秀工程師、甚至改變世界的關鍵。"
+        },
+        "projects": {
+            "paper": {
+                "description": "這個專案是一個 Discord 機器人。它可以幫助你管理你的Discord 伺服器、播放音樂、創建抽獎活動，以及更多功能。",
+                "demoText": "邀請機器人"
+            },
+            "docontrib": {
+                "description": "這個專案是一個貢獻追蹤網頁。它使用了 Next.js、TailwindCSS、MUI、TypeScript，並使用 Supabase 資料庫、Vercel 託管服務。",
+                "demoText": "查看demo"
+            }
+        },
+        "contact": {
+            "title": "聯絡我",
+            "description": "如果你有任何問題、合作機會，或是想聊聊技術，歡迎隨時聯絡我！"
+        },
+
+        "footer": {
+            "copyright": "版權所有。"
+        }
+    }
+}

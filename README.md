@@ -5,7 +5,7 @@
 
 ## 🖼 網站預覽
 
-👉 [Live Demo](https://paperdev.netlify.app) ←（請替換成你的實際 Netlify 網址）
+👉 [Live Demo](https://paperdesu.netlify.app) ←（請替換成你的實際 Netlify 網址）
 
 ![screenshot](./screenshot.png) ←（可放一張首頁截圖）
 
@@ -32,7 +32,25 @@ const me = {
     name: 'Paper',
     location: 'Taiwan',
     student: true,
-    interests: ['Coding', 'UI/UX', 'Sports', 'Languages'],
+    interests: ['Coding', 'UI/UX', 'Physics', 'Languages'],
     goal: '考上交大資工，開創屬於自己的開發人生'
 }
 ```
+
+> 想找我合作或閒聊程式開發，歡迎來信或私訊 📨
+> 📬 Email: <ericliu8888824@email.com>
+> 🐧 Discord: paper1988
+
+---
+
+## 📌 TODOs
+
+-   [ ] 加入博客區域
+-   [ ] 補完 SEO metadata（OG tag, title, description）
+-   [ ] 加入語言切換（繁中 / 英文）
+
+---
+
+## 📜 License
+
+MIT License. 使用請自由 Fork，記得給個 star ⭐️（開玩笑的，除非你願意）
