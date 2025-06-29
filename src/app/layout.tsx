@@ -19,7 +19,7 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
     title: {
-        default: 'Paper',
+        default: ' | Paper',
         template: '%s | Paper'
     },
     description:
