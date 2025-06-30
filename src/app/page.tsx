@@ -36,10 +36,23 @@ export default function Home() {
         return () => clearTimeout(timer)
     }, [])
 
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = '' // 恢復默認
+        }
+        // 清理函數：在組件卸載或 isMenuOpen 改變前執行，確保 body 樣式恢復
+        return () => {
+            document.body.style.overflow = ''
+        }
+    }, [isMenuOpen])
+
     const t = useTranslations('Home')
 
     return (
-        <main className="min-h-screen bg-background text-foreground">
+        <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
+            {' '}
             {/* navbar section */}
             <section id="navbar" className="sticky top-4 z-50 flex justify-center px-4">
                 <nav className="flex items-center w-full max-w-4xl bg-card/80 backdrop-blur-md p-4 rounded-full shadow-lg border border-border transition-colors duration-300 relative">
@@ -54,14 +67,16 @@ export default function Home() {
                     </button>
 
                     <ul
-                        className={`
-                        absolute md:static top-0 left-0 w-full md:w-auto h-screen md:h-auto
+                        className={` fixed md:static top-0 md:top-auto ${
+                            isMenuOpen ? 'left-0' : 'left-full'
+                        } md:left-auto
+                        w-full h-screen md:h-auto
                         flex flex-col md:flex-row items-center justify-center md:justify-end
                         space-y-6 md:space-y-0 md:space-x-6
                         bg-card/95 md:bg-transparent
-                        transform transition-transform duration-300 ease-in-out
-                        ${isMenuOpen ? 'translate-x-0' : 'translate-x-full md:translate-x-0'}
-                        md:flex md:pr-4 z-40
+                        transform transition-transform duration-300 ease-in-out // 保持這個
+                        ${isMenuOpen ? 'translate-x-0' : '-translate-x-0'}
+                        md:translate-x-0 md:flex md:pr-4 z-40
                         `}
                         onClick={() => setIsMenuOpen(false)}
                     >
@@ -104,7 +119,6 @@ export default function Home() {
                     </ul>
                 </nav>
             </section>
-
             {/* hero section */}
             <section
                 id="hero"
@@ -140,7 +154,6 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-
             {/* contact section */}
             <section id="contact" className="py-20 px-8 bg-muted/20">
                 <div className="max-w-2xl mx-auto text-center">
@@ -208,7 +221,6 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-
             {/* footer section */}
             <footer className="py-8 px-8 text-center text-muted-foreground border-t border-border">
                 <p>&copy; {new Date().getFullYear()} Paper. 版權所有。</p>
