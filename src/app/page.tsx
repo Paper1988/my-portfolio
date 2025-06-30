@@ -114,7 +114,7 @@ export default function Home() {
                                     )}
                                 </button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-56 text-lg" align="end">
+                            <DropdownMenuContent className="w-56" align="end">
                                 {' '}
                                 {/* align="end" 使菜單右對齊 */}
                                 <DropdownMenuItem asChild>
@@ -131,7 +131,7 @@ export default function Home() {
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem>
-                                    <ThemeToggle className="h-3 w-3" />
+                                    <ThemeToggle />
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
