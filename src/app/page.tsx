@@ -3,6 +3,13 @@
 import Discord from '@/components/icon/Discord'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/button'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
 import { Github, Mail, Menu, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
@@ -11,6 +18,16 @@ import { useEffect, useState } from 'react'
 
 export default function Home() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = ''
+        }
+        return () => {
+            document.body.style.overflow = ''
+        }
+    }, [isMenuOpen])
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -36,54 +53,19 @@ export default function Home() {
         return () => clearTimeout(timer)
     }, [])
 
-    useEffect(() => {
-        if (isMenuOpen) {
-            document.body.style.overflow = 'hidden'
-        } else {
-            document.body.style.overflow = '' // 恢復默認
-        }
-        // 清理函數：在組件卸載或 isMenuOpen 改變前執行，確保 body 樣式恢復
-        return () => {
-            document.body.style.overflow = ''
-        }
-    }, [isMenuOpen])
-
     const t = useTranslations('Home')
 
     return (
-        <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
-            {' '}
+        <main className="min-h-screen bg-background text-foreground">
             {/* navbar section */}
             <section id="navbar" className="sticky top-4 z-50 flex justify-center px-4">
-                <nav className="flex items-center w-full max-w-4xl bg-card/80 backdrop-blur-md p-4 rounded-full shadow-lg border border-border transition-colors duration-300 relative">
+                <nav className="max-w-4xl bg-card/40 backdrop-blur-md shadow-lg border border-border transition-colors duration-300 w-[calc(100%-2rem)] mx-4 p-2 flex justify-between items-center rounded-full md:w-full md:max-w-4xl md:mx-auto md:p-4">
                     <h1 className="text-2xl font-bold tracking-tight pl-4 flex-grow">Paper</h1>
-
-                    <button
-                        className="md:hidden p-2 rounded-md text-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary z-50"
-                        onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        aria-label="Toggle navigation menu"
-                    >
-                        {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                    </button>
-
-                    <ul
-                        className={` fixed md:static top-0 md:top-auto ${
-                            isMenuOpen ? 'left-0' : 'left-full'
-                        } md:left-auto
-                        w-full h-screen md:h-auto
-                        flex flex-col md:flex-row items-center justify-center md:justify-end
-                        space-y-6 md:space-y-0 md:space-x-6
-                        bg-card/95 md:bg-transparent
-                        transform transition-transform duration-300 ease-in-out // 保持這個
-                        ${isMenuOpen ? 'translate-x-0' : '-translate-x-0'}
-                        md:translate-x-0 md:flex md:pr-4 z-40
-                        `}
-                        onClick={() => setIsMenuOpen(false)}
-                    >
+                    <ul className="hidden md:flex md:flex-row md:items-center md:space-x-6 md:pr-4">
                         <li>
                             <Link
                                 href="/"
-                                className="text-xl md:text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
+                                className="text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
                                 Home
                             </Link>
@@ -91,7 +73,7 @@ export default function Home() {
                         <li>
                             <Link
                                 href="/about"
-                                className="text-xl md:text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
+                                className="text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
                                 About
                             </Link>
@@ -99,24 +81,61 @@ export default function Home() {
                         <li>
                             <Link
                                 href="/projects"
-                                className="text-xl md:text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
+                                className="text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
                                 Projects
                             </Link>
                         </li>
                         <li>
-                            <a
+                            <Link
                                 href="#contact"
-                                className="text-xl md:text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
+                                className="text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
                             >
                                 Contact
-                            </a>
+                            </Link>
                         </li>
-                        <li className="mt-6 md:mt-0">
-                            {' '}
+                        <li>
                             <ThemeToggle />
                         </li>
                     </ul>
+                    <div className="md:hidden">
+                        <DropdownMenu onOpenChange={setIsMenuOpen}>
+                            {' '}
+                            {/* 監聽菜單打開/關閉狀態 */}
+                            <DropdownMenuTrigger asChild>
+                                <button
+                                    className="p-2 rounded-md text-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary"
+                                    aria-label="Toggle navigation menu"
+                                >
+                                    {isMenuOpen ? ( // 根據狀態切換圖標
+                                        <X className="h-6 w-6" />
+                                    ) : (
+                                        <Menu className="h-6 w-6" />
+                                    )}
+                                </button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-56 text-lg" align="end">
+                                {' '}
+                                {/* align="end" 使菜單右對齊 */}
+                                <DropdownMenuItem asChild>
+                                    <Link href="/">Home</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/about">About</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/projects">Projects</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="#contact">Contact</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>
+                                    <ThemeToggle className="h-3 w-3" />
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
                 </nav>
             </section>
             {/* hero section */}
