@@ -51,7 +51,7 @@ export default function ProjectsPage() {
                 </motion.h1>
 
                 <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {projectsData.map((project, i) => (
+                    {projectsData.map((project) => (
                         <div
                             key={project.id}
                             className="bg-card p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl flex flex-col"
