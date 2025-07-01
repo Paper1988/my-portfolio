@@ -1,13 +1,10 @@
+'use client'
+
 import { ArrowLeft, ArrowRight } from 'lucide-react'
-import type { Metadata } from 'next'
+import { motion } from 'motion/react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
-
-export const metadata: Metadata = {
-    title: 'Projects',
-    description: '我的個人專案作品集。'
-}
 
 export default function ProjectsPage() {
     const t = useTranslations('Home')
@@ -44,19 +41,28 @@ export default function ProjectsPage() {
                     </Link>
                 </div>
 
-                <h1 className="text-5xl md:text-6xl font-extrabold text-center mb-12 tracking-tight">
+                <motion.h1
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                    className="text-5xl md:text-6xl font-extrabold text-center mb-12 tracking-tight"
+                >
                     我的專案
-                </h1>
+                </motion.h1>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {projectsData.map((project) => (
+                <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {projectsData.map((project, i) => (
                         <div
                             key={project.id}
                             className="bg-card p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl flex flex-col"
                         >
-                            {/* 圖片 */}
                             {project.imageSrc && (
-                                <div className="relative w-full h-40 mb-4 bg-muted rounded-md overflow-hidden flex items-center justify-center">
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                                    className="relative w-full h-40 mb-4 bg-muted rounded-md overflow-hidden flex items-center justify-center"
+                                >
                                     <Image
                                         src={project.imageSrc}
                                         alt={project.title}
@@ -64,16 +70,13 @@ export default function ProjectsPage() {
                                         objectFit="contain"
                                         className="p-4"
                                     />
-                                </div>
+                                </motion.div>
                             )}
                             <h3 className="text-2xl font-bold mb-2 text-primary">
                                 {project.title}
                             </h3>
-                            <p className="text-muted-foreground mb-4">{project.description}</p>{' '}
-                            {/* 描述文字 */}
+                            <p className="text-muted-foreground mb-4">{project.description}</p>
                             <div className="flex flex-wrap gap-2 mb-4">
-                                {' '}
-                                {/* 技術標籤 - 位置不變 */}
                                 {project.technologies.map((tech, techIndex) => (
                                     <span
                                         key={techIndex}
@@ -83,19 +86,19 @@ export default function ProjectsPage() {
                                     </span>
                                 ))}
                             </div>
-                            <div className="flex-grow" />{' '}
-                            {/* 將這個空白 div 移到技術標籤之後，連結之前 */}
-                            <Link
+                            <div className="flex-grow" />
+                            <motion.a
                                 href={project.linkHref}
                                 className="inline-flex items-center text-primary hover:text-primary/80 transition-colors duration-200 font-semibold"
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                whileTap={{ scale: 0.95 }}
                             >
                                 {project.linkText} <ArrowRight className="ml-2 h-4 w-4" />
-                            </Link>
+                            </motion.a>
                         </div>
                     ))}
-                </div>
+                </motion.div>
             </div>
         </main>
     )

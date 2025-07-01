@@ -1,34 +1,15 @@
 'use client'
 
 import Discord from '@/components/icon/Discord'
-import { ThemeToggle } from '@/components/ThemeToggle'
+import Navbar from '@/components/Navbar'
 import { Button } from '@/components/ui/button'
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import { Github, Mail, Menu, X } from 'lucide-react'
+import { Github, Mail } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 export default function Home() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
-    useEffect(() => {
-        if (isMenuOpen) {
-            document.body.style.overflow = 'hidden'
-        } else {
-            document.body.style.overflow = ''
-        }
-        return () => {
-            document.body.style.overflow = ''
-        }
-    }, [isMenuOpen])
-
     useEffect(() => {
         const timer = setTimeout(() => {
             fetch('/api/visit', {
@@ -58,86 +39,7 @@ export default function Home() {
     return (
         <main className="min-h-screen bg-background text-foreground">
             {/* navbar section */}
-            <section id="navbar" className="sticky top-4 z-50 flex justify-center px-4">
-                <nav className="max-w-4xl bg-card/40 backdrop-blur-md shadow-lg border border-border transition-colors duration-300 w-[calc(100%-2rem)] mx-4 p-2 flex justify-between items-center rounded-full md:w-full md:max-w-4xl md:mx-auto md:p-4">
-                    <h1 className="text-2xl font-bold tracking-tight pl-4 flex-grow">Paper</h1>
-                    <ul className="hidden md:flex md:flex-row md:items-center md:space-x-6 md:pr-4">
-                        <li>
-                            <Link
-                                href="/"
-                                className="text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
-                            >
-                                Home
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                href="/about"
-                                className="text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
-                            >
-                                About
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                href="/projects"
-                                className="text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
-                            >
-                                Projects
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                href="#contact"
-                                className="text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
-                            >
-                                Contact
-                            </Link>
-                        </li>
-                        <li>
-                            <ThemeToggle />
-                        </li>
-                    </ul>
-                    <div className="md:hidden">
-                        <DropdownMenu onOpenChange={setIsMenuOpen}>
-                            {' '}
-                            {/* 監聽菜單打開/關閉狀態 */}
-                            <DropdownMenuTrigger asChild>
-                                <button
-                                    className="p-2 rounded-md text-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary"
-                                    aria-label="Toggle navigation menu"
-                                >
-                                    {isMenuOpen ? ( // 根據狀態切換圖標
-                                        <X className="h-6 w-6" />
-                                    ) : (
-                                        <Menu className="h-6 w-6" />
-                                    )}
-                                </button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-56" align="end">
-                                {' '}
-                                {/* align="end" 使菜單右對齊 */}
-                                <DropdownMenuItem asChild>
-                                    <Link href="/">Home</Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem asChild>
-                                    <Link href="/about">About</Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem asChild>
-                                    <Link href="/projects">Projects</Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem asChild>
-                                    <Link href="#contact">Contact</Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>
-                                    <ThemeToggle />
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
-                </nav>
-            </section>
+            <Navbar />
             {/* hero section */}
             <section
                 id="hero"
@@ -151,7 +53,7 @@ export default function Home() {
                         height={180}
                         className="rounded-full mx-auto mb-8 shadow-lg border-2 border-border animate-fade-in"
                     />
-                    <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-4 md:mb-6 tracking-tight animate-fade-in-up">
+                    <h2 className="font-heading text-4xl md:text-6xl lg:text-7xl font-extrabold mb-4 md:mb-6 tracking-tight animate-fade-in-up">
                         {t('hero.greeting')}
                     </h2>
                     <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground mb-8 md:mb-10 leading-relaxed animate-fade-in-up delay-200">
@@ -160,13 +62,13 @@ export default function Home() {
                     <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in-up delay-400">
                         <Link
                             href="/projects"
-                            className="px-6 py-2 sm:px-8 sm:py-3 bg-primary text-primary-foreground rounded-full text-base sm:text-lg font-semibold hover:bg-primary/90 transition-colors duration-300 shadow-lg"
+                            className="flex items-center justify-center px-6 py-2 sm:px-8 sm:py-3 bg-primary text-primary-foreground rounded-full text-base sm:text-lg font-semibold hover:bg-primary/90 transition-colors duration-300 shadow-lg"
                         >
                             {t('hero.cta')}
                         </Link>
                         <Link
                             href="/about"
-                            className="px-6 py-2 sm:px-8 sm:py-3 border border-border text-foreground rounded-full text-base sm:text-lg font-semibold hover:bg-muted transition-colors duration-300"
+                            className="flex items-center justify-center px-6 py-2 sm:px-8 sm:py-3 border border-border text-foreground rounded-full text-base sm:text-lg font-semibold hover:bg-muted transition-colors duration-300"
                         >
                             {t('hero.about')}
                         </Link>

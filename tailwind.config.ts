@@ -10,6 +10,14 @@ export default {
     ],
     theme: {
         extend: {
+            fontFamily: {
+                sans: ['var(--font-noto)', 'var(--font-outfit)', 'sans-serif'],
+                heading: ['var(--font-outfit)', 'var(--font-noto-sans-tc)', 'sans-serif'], // 專門給標題
+                // 或者分開定義
+                inter: ['var(--font-inter)', 'sans-serif'],
+                outfit: ['var(--font-outfit)', 'sans-serif'],
+                notoSansTC: ['var(--font-noto-sans-tc)', 'sans-serif']
+            },
             colors: {
                 background: 'hsl(var(--background))',
                 foreground: 'hsl(var(--foreground))',
@@ -72,6 +80,15 @@ export default {
                     '0%': { opacity: '0' },
                     '100%': { opacity: '1' }
                 },
+                'fade-in-up': {
+                    '0%': {
+                        opacity: '0'
+                    },
+                    '100%': {
+                        opacity: '1',
+                        transform: 'translateY(0)' // 移動到最終位置
+                    }
+                },
                 'slide-up': {
                     '0%': { opacity: '0', transform: 'translateY(20px)' },
                     '100%': { opacity: '1', transform: 'translateY(0)' }
@@ -89,6 +106,7 @@ export default {
                 'fade-in': 'fade-in 0.8s ease-out forwards',
                 'slide-up': 'slide-up 0.8s ease-out forwards',
                 'fade-in-delay': 'fade-in 1s ease-out forwards 0.5s', // 延遲 0.5s 播放
+
                 'scale-in': 'scale-in 0.6s ease-out forwards'
             }
         }

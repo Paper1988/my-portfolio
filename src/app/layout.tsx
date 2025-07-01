@@ -8,7 +8,7 @@ import './globals.css'
 const notoSans = Noto_Sans_TC({
     subsets: ['latin'],
     weight: ['400', '700'],
-    variable: '--font-noto'
+    variable: '--font-noto-sans-tc'
 })
 
 const outfit = Outfit({

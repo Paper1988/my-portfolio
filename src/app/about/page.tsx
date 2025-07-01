@@ -1,12 +1,11 @@
-import { ArrowLeft } from 'lucide-react' // 導入返回圖標
-import type { Metadata } from 'next'
+'use client'
+
+import clsx from 'clsx'
+import { ArrowLeft } from 'lucide-react'
+import { motion } from 'motion/react'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
-
-export const metadata: Metadata = {
-    title: 'About',
-    description: '我的程式設計心路歷程與個人介紹。'
-}
+import { JSX, useEffect, useRef, useState } from 'react'
 
 interface TimelineEvent {
     title: string
@@ -82,101 +81,198 @@ const timelineData: TimelineYearGroup[] = [
     }
 ]
 
+const AnimatedTimelineEventCard = ({ event, delay }: { event: TimelineEvent; delay: number }) => {
+    const itemRef = useRef<HTMLDivElement>(null)
+    const [isVisible, setIsVisible] = useState(false)
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true)
+                    observer.unobserve(entry.target)
+                }
+            },
+            {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.2
+            }
+        )
+
+        if (itemRef.current) {
+            observer.observe(itemRef.current)
+        }
+
+        return () => {
+            if (itemRef.current) {
+                observer.unobserve(itemRef.current)
+            }
+        }
+    }, [])
+
+    return (
+        <div
+            ref={itemRef}
+            className={clsx(
+                'bg-card p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl relative pl-16 pt-10',
+                {
+                    'animate-fade-in-up': isVisible,
+                    'opacity-0': !isVisible
+                }
+            )}
+            style={{ animationDelay: isVisible ? `${delay}ms` : '0ms' }}
+        >
+            <h3 className="font-heading text-xl md:text-2xl font-bold mb-2 text-primary">
+                {event.title}
+            </h3>
+            <p className="text-muted-foreground mb-4 font-sans">{event.description}</p>
+            {event.technologies && event.technologies.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                    {event.technologies.map((tech, techIndex) => (
+                        <span
+                            key={techIndex}
+                            className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-secondary-foreground"
+                        >
+                            {tech}
+                        </span>
+                    ))}
+                </div>
+            )}
+        </div>
+    )
+}
+
+const charDelay = 0.01
+
 export default function AboutPage() {
     const t = useTranslations('Home')
-    return (
-        <main className="min-h-screen bg-background text-foreground">
-            <div className="max-w-4xl mx-auto px-8 py-8">
-                <Link
-                    href="/"
-                    className="inline-flex items-center text-primary hover:text-primary/80 transition-colors duration-200"
-                >
-                    <ArrowLeft className="mr-2 h-5 w-5" /> 返回首頁
-                </Link>
-            </div>
 
-            <section className="min-h-screen flex items-center justify-center py-16 px-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <h1 className="text-5xl md:text-6xl font-extrabold text-center mb-12 tracking-tight">
-                        關於我
-                    </h1>
-                    <div className="max-w-4xl mx-auto text-left space-y-6">
-                        <p className="text-xl leading-relaxed text-muted-foreground text-center">
-                            {t('about.p1')}
-                        </p>
-                        <div className="text-lg leading-relaxed text-muted-foreground">
-                            {[2, 3, 4].map((i) => (
-                                <p
-                                    key={i}
-                                    className="text-lg leading-relaxed text-muted-foreground"
-                                >
-                                    {t(`about.p${i}`)}
-                                    <br />
-                                </p>
+    let totalEventDelay = 0
+
+    return (
+        <motion.div initial="hidden" whileInView="visible" transition={{ staggerChildren: 0.04 }}>
+            <main className="min-h-screen bg-background text-foreground">
+                <div className="max-w-4xl mx-auto px-8 py-8">
+                    <Link
+                        href="/"
+                        className="inline-flex items-center text-primary hover:text-primary/80 transition-colors duration-200"
+                    >
+                        <ArrowLeft className="mr-2 h-5 w-5" /> 返回首頁
+                    </Link>
+                </div>
+
+                <section className="min-h-screen flex items-center justify-center py-16 px-8">
+                    <div className="max-w-4xl mx-auto text-center">
+                        <h1 className="font-heading text-5xl md:text-6xl font-extrabold text-center mb-12 tracking-tight">
+                            關於我
+                        </h1>
+                        <div className="max-w-4xl mx-auto text-left space-y-6">
+                            <motion.p
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.4, ease: 'easeOut' }}
+                                className="font-heading text-xl leading-relaxed text-muted-foreground text-center"
+                            >
+                                {t('about.p1')}
+                            </motion.p>
+                            <div className="text-lg leading-relaxed text-muted-foreground whitespace-pre-wrap">
+                                {
+                                    ([2, 3, 4] as const).reduce(
+                                        (acc, i) => {
+                                            const chars = Array.from(t(`about.p${i}`))
+                                            const baseDelay = acc.totalChars * charDelay
+                                            acc.totalChars += chars.length
+                                            acc.elements.push(
+                                                <p
+                                                    key={i}
+                                                    className="text-lg leading-relaxed text-muted-foreground"
+                                                >
+                                                    {chars.map((char, charIdx) => (
+                                                        <motion.span
+                                                            key={charIdx}
+                                                            className="inline-block"
+                                                            initial={{ opacity: 0, y: 10 }}
+                                                            animate={{ opacity: 1, y: 0 }}
+                                                            variants={{
+                                                                hidden: {
+                                                                    filter: 'blur(10px)',
+                                                                    transform: 'translateY(20%)',
+                                                                    opacity: 0
+                                                                },
+                                                                visible: {
+                                                                    filter: 'blur(0)',
+                                                                    transform: 'translateY(0)',
+                                                                    opacity: 1
+                                                                }
+                                                            }}
+                                                            transition={{
+                                                                duration: 1,
+                                                                ease: [0.25, 0.1, 0.25, 1],
+                                                                delay:
+                                                                    baseDelay + charIdx * charDelay
+                                                            }}
+                                                        >
+                                                            {char === ' ' ? '\u00A0' : char}
+                                                        </motion.span>
+                                                    ))}
+                                                </p>
+                                            )
+                                            return acc
+                                        },
+                                        { totalChars: 0, elements: [] as JSX.Element[] }
+                                    ).elements
+                                }
+                            </div>
+                        </div>
+                        <div className="h-8 md:h-10"></div>
+                    </div>
+                </section>
+
+                <section className="py-16 px-8">
+                    <div className="max-w-4xl mx-auto">
+                        <motion.h1
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, ease: 'easeOut' }}
+                            className="font-heading text-3xl md:text-5xl font-bold text-center mb-10 tracking-tight"
+                        >
+                            Timeline
+                        </motion.h1>
+
+                        <div className="relative border-l-2 border-border pl-6 ml-4 md:ml-8">
+                            {timelineData.map((yearGroup, yearIndex) => (
+                                <div key={yearIndex} className="mb-12 last:mb-0 relative">
+                                    <div className="absolute -left-12 top-0 flex items-center justify-end w-20 pr-4 h-8 bg-secondary text-secondary-foreground rounded-r-full shadow-md z-10">
+                                        {yearGroup.year === '現在' ? (
+                                            <span className="text-lg">~Now</span>
+                                        ) : (
+                                            <span className="text-sm font-semibold">
+                                                {yearGroup.year}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    <div className="grid gap-6">
+                                        {yearGroup.events.map((event, eventIndex) => {
+                                            const currentEventDelay = totalEventDelay
+                                            totalEventDelay += 150
+
+                                            return (
+                                                <AnimatedTimelineEventCard
+                                                    key={`${yearGroup.year}-${eventIndex}`}
+                                                    event={event}
+                                                    delay={currentEventDelay}
+                                                />
+                                            )
+                                        })}
+                                    </div>
+                                </div>
                             ))}
                         </div>
                     </div>
-                    <div className="h-8 md:h-10"></div>
-                </div>
-            </section>
-
-            <section className="py-16 px-8">
-                {' '}
-                {/* 時間線區塊的頂部和底部 padding */}
-                <div className="max-w-4xl mx-auto">
-                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 tracking-tight">
-                        我的程式設計時間線
-                    </h2>
-
-                    <div className="relative border-l-2 border-border pl-6 ml-4 md:ml-8">
-                        {timelineData.map((yearGroup, yearIndex) => (
-                            <div key={yearIndex} className="mb-12 last:mb-0 relative">
-                                <div className="absolute -left-12 top-0 flex items-center justify-end w-20 pr-4 h-8 bg-secondary text-secondary-foreground rounded-r-full shadow-md z-10">
-                                    {yearGroup.year === '現在' ? (
-                                        <span className="text-lg">~Now</span>
-                                    ) : (
-                                        <span className="text-sm font-semibold">
-                                            {yearGroup.year}
-                                        </span>
-                                    )}
-                                </div>
-
-                                {/* 該年份下的所有事件 */}
-                                <div className="grid gap-6">
-                                    {yearGroup.events.map((event, eventIndex) => (
-                                        <div
-                                            key={eventIndex}
-                                            className="bg-card p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl relative pl-16 pt-10"
-                                        >
-                                            <h3 className="text-xl md:text-2xl font-bold mb-2 text-primary">
-                                                {event.title}
-                                            </h3>
-                                            <p className="text-muted-foreground mb-4">
-                                                {event.description}
-                                            </p>
-                                            {event.technologies &&
-                                                event.technologies.length > 0 && (
-                                                    <div className="flex flex-wrap gap-2">
-                                                        {event.technologies.map(
-                                                            (tech, techIndex) => (
-                                                                <span
-                                                                    key={techIndex}
-                                                                    className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-secondary-foreground"
-                                                                >
-                                                                    {tech}
-                                                                </span>
-                                                            )
-                                                        )}
-                                                    </div>
-                                                )}
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-        </main>
+                </section>
+            </main>
+        </motion.div>
     )
 }
