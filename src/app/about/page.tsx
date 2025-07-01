@@ -39,7 +39,7 @@ const timelineData: TimelineYearGroup[] = [
                 technologies: ['HTML', 'CSS', 'JavaScript']
             },
             {
-                title: '踏上新的航道：Javascript',
+                title: '踏上新的航道：Node.js',
                 description:
                     '發現discord.js的社群遠比discord.py活躍，且為了突破Python舒適圈，因此開始學習 Node.js 並接觸 discord.js(v13)。',
                 technologies: ['Discord.js', 'Node.js', 'JavaScript']
