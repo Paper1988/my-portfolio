@@ -1,4 +1,4 @@
-import { MotionValue, useScroll } from 'framer-motion'
+import { MotionValue, useScroll } from 'motion/react'
 
 interface GlobalScrollProgress {
     scrollYProgress: MotionValue<number>
