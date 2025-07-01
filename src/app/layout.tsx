@@ -46,11 +46,6 @@ export const metadata: Metadata = {
                 url: 'https://paperdesu.netlify.app/og.png',
                 width: 1200,
                 height: 630
-            },
-            {
-                url: 'https://paperdesu.netlify.app/favicon.png',
-                width: 400,
-                height: 400
             }
         ],
         locale: 'zh_TW',
