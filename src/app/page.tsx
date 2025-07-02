@@ -12,13 +12,11 @@ import { useEffect } from 'react'
 export default function Home() {
     useEffect(() => {
         const timer = setTimeout(() => {
-            // 收集你想要發送的資訊
             const visitData = {
-                userAgent: navigator.userAgent, // 使用者代理字串
-                screenWidth: window.innerWidth, // 螢幕寬度
-                screenHeight: window.innerHeight, // 螢幕高度
-                referrer: document.referrer, // 頁面來源 URL
-                currentUrl: window.location.href,
+                userAgent: navigator.userAgent,
+                screenWidth: window.innerWidth,
+                screenHeight: window.innerHeight,
+                referrer: document.referrer,
                 language: navigator.language
             }
 
@@ -27,7 +25,7 @@ export default function Home() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(visitData) // 將收集到的數據放入請求體
+                body: JSON.stringify(visitData)
             })
                 .then((response) => {
                     if (response.ok) {

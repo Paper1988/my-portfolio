@@ -2,8 +2,7 @@ import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
     try {
-        const { userAgent, screenWidth, screenHeight, referrer, currentUrl, language } =
-            await req.json()
+        const { userAgent, screenWidth, screenHeight, referrer, language } = await req.json()
 
         const webhookUrl = process.env.DISCORD_WEBHOOK_URL
 
@@ -11,22 +10,15 @@ export async function POST(req: Request) {
             return NextResponse.json({ message: 'Webhook URL not configured' }, { status: 500 })
         }
 
-        const clientIp = req.headers.get('x-forwarded-for') || '未知'
-
         const payload = {
             username: '網站訪問通知',
-            avatar_url: 'https://your-website.com/your-bot-avatar.png',
+            avatar_url: 'https://paperdesu.netlify.app/paper.png',
             embeds: [
                 {
                     title: '🚀 新的網站訪問！',
                     description: `網站於 ${new Date().toLocaleString('zh-TW')} 被訪問。`,
                     color: 5814783,
                     fields: [
-                        {
-                            name: '🌐 客戶端 IP',
-                            value: clientIp,
-                            inline: true
-                        },
                         {
                             name: '🖥️ 螢幕尺寸',
                             value: `${screenWidth}x${screenHeight}`,
@@ -45,11 +37,6 @@ export async function POST(req: Request) {
                             inline: false
                         },
                         {
-                            name: '當前 URL',
-                            value: currentUrl,
-                            inline: false
-                        },
-                        {
                             name: '瀏覽器語言',
                             value: language,
                             inline: true
@@ -61,8 +48,7 @@ export async function POST(req: Request) {
                         icon_url: 'https://your-website.com/your-website-icon.png'
                     }
                 }
-            ],
-            content: `網站被訪問了！IP: ${clientIp}, 螢幕: ${screenWidth}x${screenHeight}, User-Agent: ${userAgent}`
+            ]
         }
 
         const response = await fetch(webhookUrl, {
