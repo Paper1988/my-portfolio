@@ -1,120 +1,99 @@
 // src/app/api/visit/route.ts
 import { NextResponse } from 'next/server'
 
-// 輔助函數：解析 User-Agent 來獲取裝置類型
-function getDeviceType(userAgent: string): string {
-    if (!userAgent) return '未知裝置'
-    userAgent = userAgent.toLowerCase()
-    if (
-        userAgent.includes('mobile') ||
-        userAgent.includes('android') ||
-        userAgent.includes('iphone') ||
-        userAgent.includes('ipad')
-    ) {
-        if (userAgent.includes('ipad')) return '平板'
-        return '手機'
-    }
-    if (userAgent.includes('tablet')) return '平板' // 有些平板會單獨標註 tablet
-    if (
-        userAgent.includes('windows') ||
-        userAgent.includes('macintosh') ||
-        userAgent.includes('linux')
-    ) {
-        return '桌面電腦'
-    }
-    return '其他裝置'
-}
-
-export async function POST(request: Request) {
+export async function POST(req: Request) {
     try {
-        const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL
-        const ipApiKey = process.env.IP_API_KEY // 如果你使用需要金鑰的 IP API 服務
+        // 1. 解析前端發送過來的 JSON 數據
+        const { userAgent, screenWidth, screenHeight, referrer, currentUrl, language } =
+            await req.json()
 
-        if (!discordWebhookUrl) {
-            console.error('Discord Webhook URL is not set in environment variables.')
-            return NextResponse.json({ message: 'Server configuration error.' }, { status: 500 })
+        const webhookUrl = process.env.DISCORD_WEBHOOK_URL
+
+        if (!webhookUrl) {
+            return NextResponse.json({ message: 'Webhook URL not configured' }, { status: 500 })
         }
 
-        // 獲取原始的 User-Agent
-        const rawUserAgent = request.headers.get('user-agent') || ''
-        const deviceType = getDeviceType(rawUserAgent)
+        // 獲取伺服器端的 IP 地址 (這是 Next.js 環境中獲取客戶端 IP 的一種方式)
+        // 注意：在 Vercel 等部署環境中，X-Forwarded-For 會包含真實 IP
+        const clientIp = req.headers.get('x-forwarded-for') || req.ip || '未知'
 
-        let country = '未知國家'
-        try {
-            // 向 IP-API.com 發送請求來獲取地理位置資訊
-            // 使用 `http://ip-api.com/json` 會自動檢測發送請求的 IP
-            // 如果你需要指定 IP，則為 `http://ip-api.com/json/{ip}`
-            // 對於 Next.js API 路由，請求是從伺服器發出的，所以 IP-API 會讀取到伺服器訪問者的 IP
-            const geoResponse = await fetch(
-                `http://ip-api.com/json${ipApiKey ? `?key=${ipApiKey}` : ''}`
-            )
-            const geoData = await geoResponse.json()
-
-            if (geoResponse.ok && geoData.status === 'success') {
-                country = geoData.country || '未知國家'
-            } else {
-                console.warn(
-                    'Failed to get geolocation from IP-API:',
-                    geoData.message || 'Unknown error'
-                )
-            }
-        } catch (geoError) {
-            console.error('Error fetching geolocation:', geoError)
-        }
-
-        // 構建要發送到 Discord 的訊息 (JSON 格式)
-        const messagePayload = {
-            content: '🎉 **作品集有新訪客！**', // 主要通知內容
+        // 2. 構建更詳細的 webhook payload
+        // 你可以根據 Discord Webhook 的格式要求來構建 payload
+        // 例如，使用 embeds 讓訊息更美觀
+        const payload = {
+            username: '網站訪問通知', // Webhook 發送者的名稱
+            avatar_url: 'https://your-website.com/your-bot-avatar.png', // Webhook 發送者的頭像 URL
             embeds: [
                 {
-                    title: '網站訪問通知',
-                    description: `你的個人作品集在 ${new Date().toLocaleString('zh-TW', {
-                        timeZone: 'Asia/Taipei'
-                    })} 被訪問了。`,
-                    color: 5814783, // Discord 顏色代碼 (藍綠色)
+                    title: '🚀 新的網站訪問！',
+                    description: `網站於 ${new Date().toLocaleString('zh-TW')} 被訪問。`,
+                    color: 5814783, // 藍綠色，Discord 顏色代碼
                     fields: [
                         {
-                            name: '裝置類型',
-                            value: deviceType,
+                            name: '🌐 客戶端 IP',
+                            value: clientIp,
                             inline: true
                         },
                         {
-                            name: '訪客國家',
-                            value: country,
+                            name: '🖥️ 螢幕尺寸',
+                            value: `${screenWidth}x${screenHeight}`,
+                            inline: true
+                        },
+                        {
+                            name: '🌍 訪客 User-Agent',
+                            value: `\`\`\`${userAgent.substring(0, 500)}\`\`\` ${
+                                userAgent.length > 500 ? '...' : ''
+                            }`, // 限制長度防止過長
+                            inline: false // 讓 User-Agent 獨佔一行
+                        },
+                        {
+                            name: '🔗 來源頁面 (Referrer)',
+                            value: referrer ? `[${referrer}](${referrer})` : '直接訪問或無來源', // 如果有 referrer，提供連結
+                            inline: false
+                        },
+                        {
+                            name: '當前 URL',
+                            value: currentUrl,
+                            inline: false
+                        },
+                        {
+                            name: '瀏覽器語言',
+                            value: language,
                             inline: true
                         }
-                        // 你可以在這裡添加更多資訊，例如 referer, 頁面路徑等
                     ],
+                    timestamp: new Date().toISOString(), // 訊息時間戳
                     footer: {
-                        text: '來自你的個人作品集',
-                        icon_url: 'https://your-portfolio-domain.com/favicon.ico' // 替換成你的網站 favicon
+                        text: '來自你的網站',
+                        icon_url: 'https://your-website.com/your-website-icon.png' // 網站圖標
                     }
                 }
-            ]
+            ],
+            content: `網站被訪問了！IP: ${clientIp}, 螢幕: ${screenWidth}x${screenHeight}, User-Agent: ${userAgent}`
         }
 
-        // 發送 POST 請求到 Discord Webhook
-        const response = await fetch(discordWebhookUrl, {
+        const response = await fetch(webhookUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(messagePayload)
+            body: JSON.stringify(payload)
         })
 
         if (response.ok) {
-            console.log('Webhook notification sent successfully.')
-            return NextResponse.json({ message: 'Notification sent.' })
+            return NextResponse.json({ message: 'Visit notification sent' }, { status: 200 })
         } else {
-            const errorText = await response.text()
-            console.error('Failed to send Webhook notification:', response.status, errorText)
+            console.error('Failed to send webhook:', response.status, await response.text())
             return NextResponse.json(
-                { message: 'Failed to send notification.' },
-                { status: response.status }
+                { message: 'Failed to send visit notification' },
+                { status: 500 }
             )
         }
     } catch (error) {
-        console.error('Error in Webhook API route:', error)
-        return NextResponse.json({ message: 'Internal server error.' }, { status: 500 })
+        console.error('Error processing visit:', error)
+        return NextResponse.json(
+            { message: 'Internal Server Error', error: (error as Error).message },
+            { status: 500 }
+        )
     }
 }

@@ -12,12 +12,22 @@ import { useEffect } from 'react'
 export default function Home() {
     useEffect(() => {
         const timer = setTimeout(() => {
+            // 收集你想要發送的資訊
+            const visitData = {
+                userAgent: navigator.userAgent, // 使用者代理字串
+                screenWidth: window.innerWidth, // 螢幕寬度
+                screenHeight: window.innerHeight, // 螢幕高度
+                referrer: document.referrer, // 頁面來源 URL
+                currentUrl: window.location.href,
+                language: navigator.language
+            }
+
             fetch('/api/visit', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({})
+                body: JSON.stringify(visitData) // 將收集到的數據放入請求體
             })
                 .then((response) => {
                     if (response.ok) {
