@@ -1,9 +1,7 @@
-// src/app/api/visit/route.ts
 import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
     try {
-        // 1. 解析前端發送過來的 JSON 數據
         const { userAgent, screenWidth, screenHeight, referrer, currentUrl, language } =
             await req.json()
 
@@ -13,21 +11,16 @@ export async function POST(req: Request) {
             return NextResponse.json({ message: 'Webhook URL not configured' }, { status: 500 })
         }
 
-        // 獲取伺服器端的 IP 地址 (這是 Next.js 環境中獲取客戶端 IP 的一種方式)
-        // 注意：在 Vercel 等部署環境中，X-Forwarded-For 會包含真實 IP
-        const clientIp = req.headers.get('x-forwarded-for') || req.ip || '未知'
+        const clientIp = req.headers.get('x-forwarded-for') || '未知'
 
-        // 2. 構建更詳細的 webhook payload
-        // 你可以根據 Discord Webhook 的格式要求來構建 payload
-        // 例如，使用 embeds 讓訊息更美觀
         const payload = {
-            username: '網站訪問通知', // Webhook 發送者的名稱
-            avatar_url: 'https://your-website.com/your-bot-avatar.png', // Webhook 發送者的頭像 URL
+            username: '網站訪問通知',
+            avatar_url: 'https://your-website.com/your-bot-avatar.png',
             embeds: [
                 {
                     title: '🚀 新的網站訪問！',
                     description: `網站於 ${new Date().toLocaleString('zh-TW')} 被訪問。`,
-                    color: 5814783, // 藍綠色，Discord 顏色代碼
+                    color: 5814783,
                     fields: [
                         {
                             name: '🌐 客戶端 IP',
@@ -43,12 +36,12 @@ export async function POST(req: Request) {
                             name: '🌍 訪客 User-Agent',
                             value: `\`\`\`${userAgent.substring(0, 500)}\`\`\` ${
                                 userAgent.length > 500 ? '...' : ''
-                            }`, // 限制長度防止過長
-                            inline: false // 讓 User-Agent 獨佔一行
+                            }`,
+                            inline: false
                         },
                         {
                             name: '🔗 來源頁面 (Referrer)',
-                            value: referrer ? `[${referrer}](${referrer})` : '直接訪問或無來源', // 如果有 referrer，提供連結
+                            value: referrer ? `[${referrer}](${referrer})` : '直接訪問或無來源',
                             inline: false
                         },
                         {
@@ -62,10 +55,10 @@ export async function POST(req: Request) {
                             inline: true
                         }
                     ],
-                    timestamp: new Date().toISOString(), // 訊息時間戳
+                    timestamp: new Date().toISOString(),
                     footer: {
                         text: '來自你的網站',
-                        icon_url: 'https://your-website.com/your-website-icon.png' // 網站圖標
+                        icon_url: 'https://your-website.com/your-website-icon.png'
                     }
                 }
             ],
