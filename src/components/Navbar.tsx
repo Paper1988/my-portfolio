@@ -11,7 +11,7 @@ import { Menu, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { ThemeToggle } from './ThemeToggle'
+import ThemeToggle from './ThemeToggle'
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)

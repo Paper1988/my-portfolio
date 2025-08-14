@@ -12,7 +12,7 @@ export async function POST(req: Request) {
 
         const payload = {
             username: '網站訪問通知',
-            avatar_url: 'https://paperdesu.netlify.app/paper.png',
+            avatar_url: 'https://paperdesu.netlify.app/favicon.png',
             embeds: [
                 {
                     title: '🚀 新的網站訪問！',

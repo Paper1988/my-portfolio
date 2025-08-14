@@ -5,17 +5,15 @@
 
 ## 🖼 網站預覽
 
-👉 [Live Demo](https://paperdesu.netlify.app) ←（請替換成你的實際 Netlify 網址）
-
-![screenshot](./screenshot.png) ←（可放一張首頁截圖）
+👉 [Live Demo](https://paperdesu.netlify.app)
 
 ## 🔧 使用技術
 
--   **框架**：Next.js 14 + App Router
+-   **框架**：Next.js 15 + App Router
 -   **樣式**：Tailwind CSS + ShadCN UI
 -   **部署**：Netlify
 -   **字體**：Inter（Google Fonts）
--   **動畫 / 圖片處理**：Framer Motion + Next Image
+-   **動畫 / 圖片處理**： Motion + Next Image
 -   **Icons**：Lucide
 
 ## 🚀 功能特色
@@ -32,8 +30,8 @@ const me = {
     name: 'Paper',
     location: 'Taiwan',
     student: true,
-    interests: ['Coding', 'UI/UX', 'Physics', 'Languages'],
-    goal: '考上交大資工，開創屬於自己的開發人生'
+    interests: ['Coding', 'UI/UX', 'Sport', 'Languages'],
+    goal: '成為軟體工程師，開創屬於自己的開發人生'
 }
 ```
 
@@ -46,11 +44,15 @@ const me = {
 ## 📌 TODOs
 
 -   [ ] 加入博客區域
--   [ ] 補完 SEO metadata（OG tag, title, description）
+-   [x] 補完 SEO metadata（OG tag, title, description）
 -   [ ] 加入語言切換（繁中 / 英文）
+
+---
+
+![Alt](https://repobeats.axiom.co/api/embed/cd3de275ac048db1f0d28d0e777d03ac157254c8.svg 'Repobeats analytics image')
 
 ---
 
 ## 📜 License
 
-MIT License. 使用請自由 Fork，記得給個 star ⭐️（開玩笑的，除非你願意）
+MIT License. 使用請自由 Fork，記得給個 star ⭐️
