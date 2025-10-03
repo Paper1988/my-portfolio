@@ -16,7 +16,8 @@ export default function ProjectsPage() {
             imageSrc: '/paper.png',
             technologies: ['Discord.js', 'MongoDB', 'Distube', 'Discord API', 'Railway.app'],
             linkText: t('projects.paper.demoText'),
-            linkHref: 'https://discord.com/oauth2/authorize?client_id=869166906765103135'
+            linkHref: 'https://discord.com/oauth2/authorize?client_id=869166906765103135',
+            projectPage: '/projects/paper'
         },
         {
             id: 2,
@@ -25,7 +26,8 @@ export default function ProjectsPage() {
             imageSrc: '/DoContrib.jpg',
             technologies: ['Next.js', 'Tailwind CSS', 'Supabase', 'Vercel'],
             linkText: t('projects.docontrib.demoText'),
-            linkHref: '#'
+            linkHref: '#',
+            projectPage: '/projects/docontrib'
         }
     ]
 
@@ -52,9 +54,12 @@ export default function ProjectsPage() {
 
                 <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {projectsData.map((project) => (
-                        <div
+                        <motion.div
                             key={project.id}
-                            className="bg-card p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl flex flex-col"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, ease: 'easeOut' }}
+                            className="bg-card p-6 rounded-lg shadow-lg transform transition-all duration-300 flex flex-col hover:shadow-xl hover:-translate-y-1"
                         >
                             {project.imageSrc && (
                                 <motion.div
@@ -66,9 +71,8 @@ export default function ProjectsPage() {
                                     <Image
                                         src={project.imageSrc}
                                         alt={project.title}
-                                        layout="fill"
-                                        objectFit="contain"
-                                        className="p-4"
+                                        fill
+                                        className="object-contain p-4"
                                     />
                                 </motion.div>
                             )}
@@ -87,16 +91,26 @@ export default function ProjectsPage() {
                                 ))}
                             </div>
                             <div className="flex-grow" />
-                            <motion.a
-                                href={project.linkHref}
-                                className="inline-flex items-center text-primary hover:text-primary/80 transition-colors duration-200 font-semibold"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                {project.linkText} <ArrowRight className="ml-2 h-4 w-4" />
-                            </motion.a>
-                        </div>
+                            <div className="flex flex-col sm:flex-row gap-2">
+                                <motion.div whileTap={{ scale: 0.95 }}>
+                                    <Link
+                                        href={project.projectPage}
+                                        className="inline-flex items-center justify-center px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors duration-200"
+                                    >
+                                        查看詳情
+                                    </Link>
+                                </motion.div>
+                                <motion.a
+                                    href={project.linkHref}
+                                    className="inline-flex items-center justify-center px-4 py-2 border border-border text-foreground rounded-md text-sm font-medium hover:bg-muted transition-colors duration-200"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    {project.linkText} <ArrowRight className="ml-2 h-4 w-4" />
+                                </motion.a>
+                            </div>
+                        </motion.div>
                     ))}
                 </motion.div>
             </div>

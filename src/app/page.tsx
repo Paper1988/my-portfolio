@@ -55,7 +55,7 @@ export default function Home() {
             >
                 <div>
                     <Image
-                        src="/avatar.jpg"
+                        src="/favicon.png"
                         alt="avatar"
                         width={180}
                         height={180}

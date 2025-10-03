@@ -26,7 +26,7 @@
 ## 👶 作者資訊
 
 ```ts
-const me = {
+let me: Me = {
     name: 'Paper',
     location: 'Taiwan',
     student: true,

@@ -1,40 +1,40 @@
 {
-  "name": "my-portfolio-nextjs",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@radix-ui/react-dropdown-menu": "^2.1.15",
-    "@radix-ui/react-slot": "^1.2.3",
-    "@ramonak/react-progress-bar": "^5.4.0",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.511.0",
-    "motion": "^12.20.1",
-    "next": "15.1.8",
-    "next-intl": "^4.3.1",
-    "next-themes": "^0.4.6",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "shadcn": "^2.7.0",
-    "tailwind-merge": "^3.3.1",
-    "tailwindcss-animate": "^1.0.7"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
-    "@types/node": "^20.19.1",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "eslint": "^9.29.0",
-    "eslint-config-next": "15.1.8",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^3.4.17",
-    "typescript": "^5.8.3"
-  },
-  "packageManager": "pnpm@10.12.4+sha512.5ea8b0deed94ed68691c9bad4c955492705c5eeb8a87ef86bc62c74a26b037b08ff9570f108b2e4dbd1dd1a9186fea925e527f141c648e85af45631074680184"
+    "name": "paperdesu",
+    "version": "1.0.3",
+    "private": true,
+    "scripts": {
+        "dev": "next dev --turbopack",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@radix-ui/react-dropdown-menu": "^2.1.15",
+        "@radix-ui/react-slot": "^1.2.3",
+        "@ramonak/react-progress-bar": "^5.4.0",
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
+        "lucide-react": "^0.511.0",
+        "motion": "^12.20.1",
+        "next": "15.1.8",
+        "next-intl": "^4.3.1",
+        "next-themes": "^0.4.6",
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0",
+        "shadcn": "^2.7.0",
+        "tailwind-merge": "^3.3.1",
+        "tailwindcss-animate": "^1.0.7"
+    },
+    "devDependencies": {
+        "@eslint/eslintrc": "^3.3.1",
+        "@types/node": "^20.19.1",
+        "@types/react": "^19.1.8",
+        "@types/react-dom": "^19.1.6",
+        "eslint": "^9.29.0",
+        "eslint-config-next": "15.1.8",
+        "postcss": "^8.5.6",
+        "tailwindcss": "^3.4.17",
+        "typescript": "^5.8.3"
+    },
+    "packageManager": "pnpm@10.12.4+sha512.5ea8b0deed94ed68691c9bad4c955492705c5eeb8a87ef86bc62c74a26b037b08ff9570f108b2e4dbd1dd1a9186fea925e527f141c648e85af45631074680184"
 }

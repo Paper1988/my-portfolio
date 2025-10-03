@@ -25,8 +25,8 @@ const timelineData: TimelineYearGroup[] = [
             {
                 title: '初識程式：Discord.py',
                 description:
-                    '當時經營Discord伺服器風氣正夯，我也順應風氣想經營一個伺服器，因此接觸到了Discord裡的「機器人」功能。後來發現許多機器人需要付費，因此我想嘗試自創機器人，而開啟了我的程式設計旅程。透過在Youtube上自學，我成功地創造出了第一版 Paper 機器人。',
-                technologies: ['Discord.py', 'Python', 'Discord API']
+                    '當時經營Discord伺服器風氣正夯，我也順應潮流想經營一個伺服器，因此接觸到了Discord裡的「機器人」功能。後來發現許多機器人需要付費，因此我想嘗試自創機器人，而開啟了我的程式設計之旅。透過在Youtube上自學，我成功地創造出了第一版 Paper 機器人。',
+                technologies: ['Python', 'Discord.py', 'Discord API']
             }
         ]
     },
@@ -42,7 +42,7 @@ const timelineData: TimelineYearGroup[] = [
                 title: '踏上新的航道：Node.js',
                 description:
                     '發現discord.js的社群遠比discord.py活躍，且為了突破Python舒適圈，因此開始學習 Node.js 並接觸 discord.js(v13)。',
-                technologies: ['Discord.js', 'Node.js', 'JavaScript']
+                technologies: ['Node.js', 'Discord.js', 'JavaScript']
             }
         ]
     },
@@ -64,7 +64,7 @@ const timelineData: TimelineYearGroup[] = [
                 title: '擁抱現代前端框架：Next.js 與 React 生態系',
                 description:
                     '為了提升開發效率和網站性能，轉向學習 Next.js 和 React。理解組件化開發，並應用於作品集網站的重構。',
-                technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS']
+                technologies: ['TypeScript', 'Next.js', 'React', 'Tailwind CSS']
             }
         ]
     },
